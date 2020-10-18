@@ -1,4 +1,4 @@
-#include "hw_timer.h"    
+#include "hw_timer.h"
 #include <ESP8266WiFi.h>
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>      
@@ -29,6 +29,7 @@ void setup() {
   pinMode(zcPin, INPUT_PULLUP);
   pinMode(light1, OUTPUT);
   pinMode(light2, OUTPUT);
+  pinMode(pwmPin, OUTPUT);
   attachInterrupt(zcPin, zcDetectISR, RISING);    // Attach an Interupt to Pin 2 (interupt 0) for Zero Cross Detection
   hw_timer_init(NMI_SOURCE, 0);
   hw_timer_set_func(dimTimerISR);
@@ -190,6 +191,7 @@ void dimTimerISR() {
 }
 
 ICACHE_RAM_ATTR void zcDetectISR() {
+  Serial.println("------zcDetectISR----");
   if (zcState == 0) {
     zcState = 1;
   
