@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.tonmoym2mx.iot.iothome.R
 import com.tonmoym2mx.iot.iothome.databinding.ActivityMainBinding
 import com.tonmoym2mx.iot.iothome.repository.HomeIoTRepository
+import com.tonmoym2mx.iot.iothome.ui.custom_view.Croller
+import com.tonmoym2mx.iot.iothome.ui.custom_view.OnCrollerChangeListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.java.KoinJavaComponent.inject
 
@@ -20,6 +22,7 @@ private var speed:Int = 255
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupViewModel()
         binding.fan.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -32,6 +35,21 @@ class MainActivity : AppCompatActivity() {
                 binding.textView.text = it.toString()
             })
         }
+        binding.croller.setOnCrollerChangeListener(object :OnCrollerChangeListener{
+            override fun onProgressChanged(croller: Croller?, progress: Int) {
+                viewModel.fan(true,progress).observe(this@MainActivity, Observer {
+                    binding.textView.text = it.toString()
+                })
+            }
+
+            override fun onStartTrackingTouch(croller: Croller?) {
+
+            }
+
+            override fun onStopTrackingTouch(croller: Croller?) {
+
+            }
+        })
         binding.seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 viewModel.fan(true,progress).observe(this@MainActivity, Observer {
@@ -48,6 +66,26 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
+       /* mCircularSeekBar.setDrawMarkings(true)
+        mCircularSeekBar.dotMarkers = true
+        mCircularSeekBar.setRoundedEdges(true)
+        mCircularSeekBar.setIsGradient(true)
+        mCircularSeekBar.setPopup(true)
+        mCircularSeekBar.sweepAngle = 270-5
+        mCircularSeekBar.arcRotation = 225-5
+        mCircularSeekBar.arcThickness = 30
+        mCircularSeekBar.min = 0
+        mCircularSeekBar.max = 100
+        mCircularSeekBar.progress = 10f
+        mCircularSeekBar.setIncreaseCenterNeedle(20)
+        mCircularSeekBar.valueStep = 1
+        mCircularSeekBar.setNeedleFrequency(0.5f)
+        mCircularSeekBar.needleDistanceFromCenter = 32
+        mCircularSeekBar.setNeedleLengthInDP(12)
+        mCircularSeekBar.setIncreaseCenterNeedle(24)
+        mCircularSeekBar.needleThickness = 1.toFloat()
+        mCircularSeekBar.setPopup(false)
+        mCircularSeekBar.setHeightForPopupFromThumb(10)*/
 
     }
 

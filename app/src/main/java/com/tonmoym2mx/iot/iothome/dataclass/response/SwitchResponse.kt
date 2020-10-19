@@ -13,4 +13,8 @@ data class SwitchResponse(
     var message: String? = null,
     @SerializedName("speed")
     var speed: Int? = null
-):Serializable
+):Serializable{
+    override fun toString(): String {
+        return "Device:$device \tspeed:$speed\nisOn:$isOn)"
+    }
+}
