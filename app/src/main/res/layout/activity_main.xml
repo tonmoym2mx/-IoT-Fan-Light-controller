@@ -14,94 +14,150 @@
     android:background="@color/black"
     >
 
-    <ToggleButton
-        android:id="@+id/light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="ToggleButton"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ToggleButton
-        android:id="@+id/fan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="ToggleButton"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:max="255"
-        android:min="0"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Switch"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="109dp"
-        tools:layout_editor_absoluteY="110dp" />
-
 
     <com.tonmoym2mx.iot.iothome.ui.custom_view.Croller
         android:id="@+id/croller"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-
-
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:back_circle_color="@color/gay"
         app:indicator_color="@color/green"
         app:indicator_width="10"
         app:is_continuous="true"
         app:label_color="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/light"
+
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:main_circle_color="@color/black"
         app:max="255"
         app:min="0"
         app:progress_primary_color="@color/green"
-        app:progress_primary_stroke_width="8"
-        app:progress_secondary_stroke_width="8"
+        app:progress_primary_stroke_width="60"
+        app:progress_secondary_stroke_width="60"
         app:start_offset="45" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:textColor="@color/white"
+        android:background="@color/red"
+        android:text="Device Not Connected"
+        android:visibility="@{viewModel.deviceNotConnection}"
+
+        android:gravity="center"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/lightGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginStart="32dp"
+        app:alignItems="center"
+        app:justifyContent="center"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:toggle_requiredAmount="0"
+        app:toggle_selectableAmount="3">
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/lightButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:toggle_backgroundColor="@color/black"
+            app:toggle_borderColor="@color/gay"
+            app:toggle_borderWidth="5dp"
+            app:toggle_btnCornerRadius="50dp"
+            app:toggle_icon="@drawable/ic__7_on"
+            app:toggle_iconColor="#C6C6C6"
+            app:toggle_iconPadding="27dp"
+            app:toggle_selectedBackgroundColor="@color/green"
+            app:toggle_selectedBorderColor="@color/green"
+            app:toggle_selectedIcon="@drawable/ic__7_on" />
+
+
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/fanGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginEnd="32dp"
+        app:alignItems="center"
+        app:justifyContent="center"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:toggle_requiredAmount="0"
+        app:toggle_selectableAmount="3">
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+
+            android:id="@+id/fanButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:toggle_backgroundColor="@color/black"
+            app:toggle_borderColor="#3F413F"
+            app:toggle_borderWidth="5dp"
+            app:toggle_btnCornerRadius="50dp"
+            app:toggle_icon="@drawable/ic_ceiling_fan"
+            app:toggle_iconColor="#C6C6C6"
+            app:toggle_iconPadding="30dp"
+
+            app:toggle_selectedBackgroundColor="@color/green"
+            app:toggle_selectedBorderColor="@color/green"
+            app:toggle_selectedIcon="@drawable/ic_ceiling_fan" />
+
+
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="@{viewModel.lightText}"
+        tools:text="LIGHT OFF"
+        android:textColor="@color/gay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/lightGroup"
+        app:layout_constraintStart_toStartOf="@+id/lightGroup" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="@{viewModel.fanText}"
+        tools:text="FAN OFF"
+        android:textColor="@color/gay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fanGroup"
+        app:layout_constraintStart_toStartOf="@+id/fanGroup" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+
+        android:text="@{viewModel.speedText}"
+        tools:text="80%"
+
+        android:textColor="@color/gay"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@+id/lightGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

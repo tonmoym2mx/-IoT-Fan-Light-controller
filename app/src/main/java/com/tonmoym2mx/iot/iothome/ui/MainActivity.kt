@@ -25,21 +25,26 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupViewModel()
-        binding.fan.setOnCheckedChangeListener { buttonView, isChecked ->
-            viewModel.fan(isChecked,speed).observe(this@MainActivity, Observer {
-                binding.textView.text = it.toString()
-            })
-        }
-        binding.light.setOnCheckedChangeListener { buttonView, isChecked ->
-            viewModel.light(isChecked).observe(this@MainActivity, Observer {
-                binding.textView.text = it.toString()
-            })
-        }
+
+        viewModel.status()
+        viewModel.boardStatus.observe(this, Observer {
+            binding.croller.progress = it.fanSpeed?:0
+            binding.lightButton.isSelected = it.isLightOneOn==1
+            binding.fanButton.isSelected = it.isFanOn ==1
+            binding.lightButton.postInvalidate()
+            binding.fanButton.postInvalidate()
+            uiSetup()
+        })
+
+
+
+    }
+
+    private fun uiSetup() {
+
         binding.croller.setOnCrollerChangeListener(object :OnCrollerChangeListener{
             override fun onProgressChanged(croller: Croller?, progress: Int) {
-                viewModel.fan(true,progress).observe(this@MainActivity, Observer {
-                    binding.textView.text = it.toString()
-                })
+                viewModel.fan(true,progress)
             }
 
             override fun onStartTrackingTouch(croller: Croller?) {
@@ -50,43 +55,14 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
-        binding.seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                viewModel.fan(true,progress).observe(this@MainActivity, Observer {
-                    speed = progress
-                    binding.textView.text = it.toString()
-                })
-            }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+        binding.lightGroup.setOnSelectListener { themedButton ->
+            viewModel.light(themedButton.isSelected)
+        }
+        binding.fanGroup.setOnSelectListener {themedButton ->
+            viewModel.fan(themedButton.isSelected, speed)
 
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-        })
-       /* mCircularSeekBar.setDrawMarkings(true)
-        mCircularSeekBar.dotMarkers = true
-        mCircularSeekBar.setRoundedEdges(true)
-        mCircularSeekBar.setIsGradient(true)
-        mCircularSeekBar.setPopup(true)
-        mCircularSeekBar.sweepAngle = 270-5
-        mCircularSeekBar.arcRotation = 225-5
-        mCircularSeekBar.arcThickness = 30
-        mCircularSeekBar.min = 0
-        mCircularSeekBar.max = 100
-        mCircularSeekBar.progress = 10f
-        mCircularSeekBar.setIncreaseCenterNeedle(20)
-        mCircularSeekBar.valueStep = 1
-        mCircularSeekBar.setNeedleFrequency(0.5f)
-        mCircularSeekBar.needleDistanceFromCenter = 32
-        mCircularSeekBar.setNeedleLengthInDP(12)
-        mCircularSeekBar.setIncreaseCenterNeedle(24)
-        mCircularSeekBar.needleThickness = 1.toFloat()
-        mCircularSeekBar.setPopup(false)
-        mCircularSeekBar.setHeightForPopupFromThumb(10)*/
-
+        }
     }
 
     private fun setupViewModel() {
