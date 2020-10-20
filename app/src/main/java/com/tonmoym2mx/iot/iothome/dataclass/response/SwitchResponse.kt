@@ -15,6 +15,6 @@ data class SwitchResponse(
     var speed: Int? = null
 ):Serializable{
     override fun toString(): String {
-        return "Device:$device \tspeed:$speed\nisOn:$isOn)"
+        return "Device:$device speed:$speed isOn:$isOn"
     }
 }
