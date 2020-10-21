@@ -24,8 +24,7 @@ IPAddress apIP(172, 217, 28, 1);
 DNSServer dnsServer;
 ESP8266WebServer webServer(80);
 
-void setup() {
-  Serial.begin(115200);   
+void setup() {  
   pinMode(zcPin, INPUT_PULLUP);
   pinMode(light1, OUTPUT);
   pinMode(light2, OUTPUT);
@@ -136,17 +135,13 @@ void loop() {
   if(lightChange){
   if(light1IsOn){
     digitalWrite(light1,HIGH);
-    Serial.println("Ligh1 On");
   }else{
     digitalWrite(light1,LOW);
-     Serial.println("Ligh1 OFF");
   }
   if(light2IsOn){
      digitalWrite(light2,HIGH);
-     Serial.println("Ligh2 On");
   }else{
      digitalWrite(light2,LOW);
-     Serial.println("Ligh2 Off");
   }
   lightChange = false;
   }
@@ -186,12 +181,10 @@ void dimTimerISR() {
     }
     
     zcState = 0;
-    Serial.println(curBrightness);
   
 }
 
 ICACHE_RAM_ATTR void zcDetectISR() {
-  Serial.println("------zcDetectISR----");
   if (zcState == 0) {
     zcState = 1;
   

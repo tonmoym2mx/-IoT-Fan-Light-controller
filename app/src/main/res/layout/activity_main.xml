@@ -12,6 +12,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity"
     android:background="@color/black"
+
     >
 
 

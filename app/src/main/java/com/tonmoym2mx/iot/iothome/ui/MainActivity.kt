@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.croller.setOnCrollerChangeListener(object :OnCrollerChangeListener{
             override fun onProgressChanged(croller: Croller?, progress: Int) {
+                speed = progress
                 viewModel.fan(true,progress)
             }
 
