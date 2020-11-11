@@ -35,9 +35,7 @@ class MainActivity : AppCompatActivity() {
             binding.fanButton.postInvalidate()
             uiSetup()
         })
-
-
-
+        
     }
 
     private fun uiSetup() {
