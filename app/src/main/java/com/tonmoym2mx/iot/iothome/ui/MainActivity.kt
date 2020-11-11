@@ -27,12 +27,16 @@ class MainActivity : AppCompatActivity() {
         setupViewModel()
 
         viewModel.status()
+
+
         viewModel.boardStatus.observe(this, Observer {
             binding.croller.progress = it.fanSpeed?:0
-            binding.lightButton.isSelected = it.isLightOneOn==1
-            binding.fanButton.isSelected = it.isFanOn ==1
-            binding.lightButton.postInvalidate()
-            binding.fanButton.postInvalidate()
+            if(it.isLightOneOn==1){
+                binding.lightGroup.selectButton(R.id.lightButton)
+            }
+            if(it.isFanOn ==1){
+                binding.fanGroup.selectButton(R.id.fanButton)
+            }
             uiSetup()
         })
         
@@ -43,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.croller.setOnCrollerChangeListener(object :OnCrollerChangeListener{
             override fun onProgressChanged(croller: Croller?, progress: Int) {
                 speed = progress
-                viewModel.fan(true,progress)
+                viewModel.fan(viewModel.isFanOnLiveData.value==true,progress)
             }
 
             override fun onStartTrackingTouch(croller: Croller?) {

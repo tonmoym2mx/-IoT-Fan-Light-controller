@@ -13,6 +13,7 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
     val lightStatus: MutableLiveData<SwitchResponse> by lazy { MutableLiveData<SwitchResponse>() }
     val fanStatus: MutableLiveData<SwitchResponse> by lazy { MutableLiveData<SwitchResponse>() }
     val boardStatus: MutableLiveData<BoardStatus> by lazy { MutableLiveData<BoardStatus>() }
+    val isFanOnLiveData: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     val lightText:LiveData<String> = Transformations.map(lightStatus){
         if(it.isOn ==0){
             "LIGHT OFF"
@@ -43,6 +44,7 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
            val res =  homeIoTRepository.status()
             if(res?.status == Status.SUCCESS){
                 val data =res.data
+                isFanOnLiveData.postValue(data?.isFanOn==1)
                 fanStatus.postValue(SwitchResponse("Fan",data?.isFanOn,"",data?.fanSpeed))
                 lightStatus.postValue(SwitchResponse("light1",data?.isLightOneOn))
                 boardStatus.postValue(data)
@@ -52,15 +54,6 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
         }
     }
 
- /*   fun light(isOn:Boolean) = liveData(Dispatchers.IO){
-        val res = homeIoTRepository.light(isOn)
-        if(res?.status == Status.SUCCESS){
-            emit( res.data)
-        }else{
-            emit( res?.message)
-        }
-
-    }*/
     fun light(isOn: Boolean){
         viewModelScope.launch {
             deviceNotConnection.postValue(View.INVISIBLE)
@@ -76,6 +69,7 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
 
         viewModelScope.launch {
             deviceNotConnection.postValue(View.INVISIBLE)
+            isFanOnLiveData.postValue(isOn)
             val res = homeIoTRepository.fan(isOn, speed)
             if(res?.status == Status.SUCCESS){
                 fanStatus.postValue(res.data)
@@ -85,15 +79,6 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
         }
 
     }
-
-    /*fun fan(isOn:Boolean,speed:Int) = liveData(Dispatchers.IO){
-        val res = homeIoTRepository.fan(isOn,speed)
-        if(res?.status == Status.SUCCESS){
-            emit( res.data)
-        }else{
-            emit(res?.message)
-        }
-    }*/
     private fun map(x: Int, in_min: Int, in_max: Int, out_min: Int, out_max: Int): Int {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
     }
