@@ -3,6 +3,7 @@ package com.tonmoym2mx.iot.iothome.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,24 +26,33 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupViewModel()
-
         viewModel.status()
+        setupObserver()
+        uiSetup()
+    }
 
-
+    private fun setupObserver() {
         viewModel.boardStatus.observe(this, Observer {
             binding.croller.progress = it.fanSpeed?:0
             if(it.isLightOneOn==1){
                 binding.lightGroup.selectButton(R.id.lightButton)
+                binding.lightButton.isSelected = true
             }
             if(it.isFanOn ==1){
                 binding.fanGroup.selectButton(R.id.fanButton)
+                binding.fanButton.isSelected = true
             }
-            uiSetup()
+
+
         })
-        
     }
 
     private fun uiSetup() {
+
+        binding.refresh.setOnClickListener {
+            viewModel.status()
+        }
+
 
         binding.croller.setOnCrollerChangeListener(object :OnCrollerChangeListener{
             override fun onProgressChanged(croller: Croller?, progress: Int) {
@@ -60,10 +70,14 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.lightGroup.setOnSelectListener { themedButton ->
-            viewModel.light(themedButton.isSelected)
+            if(viewModel.isLoading.value == false) {
+                viewModel.light(themedButton.isSelected)
+            }
         }
         binding.fanGroup.setOnSelectListener {themedButton ->
-            viewModel.fan(themedButton.isSelected, speed)
+            if(viewModel.isLoading.value == false) {
+                viewModel.fan(themedButton.isSelected, speed)
+            }
 
         }
     }

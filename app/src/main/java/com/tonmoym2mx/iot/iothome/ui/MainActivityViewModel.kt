@@ -6,6 +6,7 @@ import com.tonmoym2mx.iot.iothome.dataclass.common.Status
 import com.tonmoym2mx.iot.iothome.dataclass.response.BoardStatus
 import com.tonmoym2mx.iot.iothome.dataclass.response.SwitchResponse
 import com.tonmoym2mx.iot.iothome.repository.HomeIoTRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : ViewModel() {
@@ -14,6 +15,7 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
     val fanStatus: MutableLiveData<SwitchResponse> by lazy { MutableLiveData<SwitchResponse>() }
     val boardStatus: MutableLiveData<BoardStatus> by lazy { MutableLiveData<BoardStatus>() }
     val isFanOnLiveData: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>(false) }
     val lightText:LiveData<String> = Transformations.map(lightStatus){
         if(it.isOn ==0){
             "LIGHT OFF"
@@ -41,7 +43,8 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
     }
     fun status(){
         viewModelScope.launch {
-           val res =  homeIoTRepository.status()
+            isLoading.postValue(true)
+            val res =  homeIoTRepository.status()
             if(res?.status == Status.SUCCESS){
                 val data =res.data
                 isFanOnLiveData.postValue(data?.isFanOn==1)
@@ -51,11 +54,13 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
             }else{
                 deviceNotConnection.postValue(View.VISIBLE)
             }
+            isLoading.postValue(false)
         }
     }
 
     fun light(isOn: Boolean){
         viewModelScope.launch {
+            isLoading.postValue(true)
             deviceNotConnection.postValue(View.INVISIBLE)
             val res = homeIoTRepository.light(isOn)
             if(res?.status == Status.SUCCESS){
@@ -63,6 +68,7 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
             }else{
                 deviceNotConnection.postValue(View.VISIBLE)
             }
+            isLoading.postValue(false)
         }
     }
     fun fan(isOn: Boolean, speed: Int){
@@ -70,12 +76,14 @@ class MainActivityViewModel(private val homeIoTRepository: HomeIoTRepository) : 
         viewModelScope.launch {
             deviceNotConnection.postValue(View.INVISIBLE)
             isFanOnLiveData.postValue(isOn)
+            isLoading.postValue(true)
             val res = homeIoTRepository.fan(isOn, speed)
             if(res?.status == Status.SUCCESS){
                 fanStatus.postValue(res.data)
             }else{
                 deviceNotConnection.postValue(View.VISIBLE)
             }
+            isLoading.postValue(false)
         }
 
     }

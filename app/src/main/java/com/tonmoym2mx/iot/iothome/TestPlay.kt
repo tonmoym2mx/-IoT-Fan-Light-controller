@@ -12,6 +12,7 @@ fun aVeryBigSum(ar: Array<Long>): Long  {
             }
         }
     }
+    ar.sortedArrayDescending()
     return sum
 }
 

@@ -12,7 +12,7 @@ bool lightChange = true;
 
 byte fade = 1;
 byte state = 1;
-byte tarBrightness = 255;
+byte tarBrightness = 0;// max 255
 byte curBrightness = 0;
 byte zcState = 0; // 0 = ready; 1 = processing;
 
