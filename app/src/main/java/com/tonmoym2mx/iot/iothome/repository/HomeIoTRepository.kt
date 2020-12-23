@@ -6,4 +6,5 @@ class HomeIoTRepository(private val homeApiHelper: HomeApiHelper) {
     suspend fun light(isOn:Boolean) = homeApiHelper.light(isOn)
     suspend fun fan(isOn:Boolean,speed:Int) = homeApiHelper.fan(isOn,speed)
     suspend fun status() = homeApiHelper.status()
+    suspend fun readSensorData() = homeApiHelper.readSensorData()
 }

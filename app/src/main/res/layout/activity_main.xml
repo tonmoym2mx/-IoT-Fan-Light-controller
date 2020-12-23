@@ -23,23 +23,26 @@
                 android:layout_height="0dp"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
                 app:back_circle_color="@color/gay"
                 app:indicator_color="@color/green"
+
                 app:indicator_width="10"
                 app:is_continuous="true"
                 app:label_color="@color/white"
-
                 app:layout_constraintBottom_toTopOf="@+id/textView4"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
                 app:main_circle_color="@color/black"
                 app:max="255"
                 app:min="0"
                 app:progress_primary_color="@color/green"
-                app:progress_primary_stroke_width="60"
-                app:progress_secondary_stroke_width="60"
+                app:progress_primary_stroke_width="10"
+                app:progress_secondary_stroke_width="10"
                 app:start_offset="45" />
 
             <TextView
@@ -55,7 +58,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
                 android:id="@+id/lightGroup"
@@ -153,7 +157,7 @@
                 tools:text="80%"
 
                 android:textColor="@color/gay"
-                android:textSize="35sp"
+                android:textSize="30sp"
                 app:layout_constraintBottom_toTopOf="@+id/lightGroup"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -162,13 +166,53 @@
                 android:id="@+id/refresh"
                 android:layout_width="40dp"
                 android:layout_height="0dp"
-                android:visibility="@{viewModel.deviceNotConnection}"
-                android:foreground="?selectableItemBackground"
                 android:background="@android:color/transparent"
+                android:foreground="?selectableItemBackground"
                 android:src="@drawable/ic_baseline_refresh_24"
-                app:layout_constraintBottom_toTopOf="@+id/croller"
+                android:visibility="@{viewModel.deviceNotConnection}"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_thermometer"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@{viewModel.temperatureLiveData}"
+                    android:textColor="@color/gay"
+                    android:textSize="25sp"
+                    tools:text="25 °C" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_humidity"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@{viewModel.humidityLiveData}"
+                    android:textColor="@color/gay"
+                    android:textSize="25sp"
+                    tools:text="80%" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

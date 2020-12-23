@@ -2,6 +2,7 @@ package com.tonmoym2mx.iot.iothome.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -56,8 +57,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.croller.setOnCrollerChangeListener(object :OnCrollerChangeListener{
             override fun onProgressChanged(croller: Croller?, progress: Int) {
-                speed = progress
-                viewModel.fan(viewModel.isFanOnLiveData.value==true,progress)
+                    speed = progress
+                    viewModel.fan(viewModel.isFanOnLiveData.value == true, progress)
+
             }
 
             override fun onStartTrackingTouch(croller: Croller?) {
