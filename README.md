@@ -1,6 +1,6 @@
 # Fan-Light-controller
 
-Room light and fan can be controlled and with it, you can see the temperature of the room and the humidity of the air. 
+Room light and fan can be controlled and with it you can see the temperature of the room and the humidity of the air. 
 Here Node MCU, relays, AC controller, and DHT11 sensor are used as devices. 
 
 <img src="https://github.com/tonmoym2mx/-IoT-Fan-Light-controller/blob/master/Screenshot.jpg" width="300" >
